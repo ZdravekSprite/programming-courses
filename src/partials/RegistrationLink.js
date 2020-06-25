@@ -17,10 +17,10 @@ const autumnLink =
 function getLink() {
   const currentDate = moment()
   if (currentDate.isBetween(start, summerStart)) {
-    return springLink
+    return summerLink
   }
   if (currentDate.isBetween(start, autumnStart)) {
-    return summerLink
+    return autumnLink
   }
   return springLink
 }

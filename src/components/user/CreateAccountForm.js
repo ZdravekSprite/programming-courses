@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
 import { TextField, Button } from "@material-ui/core"
-import { createAccount, authenticate } from "../../services/moocfi"
+import { authenticate } from "../../services/moocfi"
 import { capitalizeFirstLetter } from "../../util/strings"
 import { navigate } from "gatsby"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
@@ -33,11 +33,6 @@ class CreateAccountForm extends React.Component {
       return
     }
     try {
-      const res = await createAccount({
-        email: this.state.email,
-        password: this.state.password,
-        password_confirmation: this.state.password_confirmation,
-      })
       await authenticate({
         username: this.state.email,
         password: this.state.password,

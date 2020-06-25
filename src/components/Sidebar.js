@@ -136,10 +136,28 @@ class Sidebar extends React.Component {
     let content = content2.concat(edges)
     content = content.concat(futurePages)
 
+    let startKpoint = content.findIndex(o => o.title === "Lesson 1")
+    content.splice(startKpoint, 0, {
+      separator: true,
+      title: "Kotlin Programming I",
+    })
+
+    let startpoint = content.findIndex(o => o.title === "Part 1")
+    content.splice(startpoint, 0, {
+      separator: true,
+      title: "Java Programming I",
+    })
+
     let middlepoint = content.findIndex(o => o.title === "Part 7")
     content.splice(middlepoint + 1, 0, {
       separator: true,
       title: "Java Programming II",
+    })
+
+    let endpoint = content.findIndex(o => o.title === "Part 14")
+    content.splice(endpoint + 1, 0, {
+      separator: true,
+      title: "Java Programming III",
     })
 
     return (
