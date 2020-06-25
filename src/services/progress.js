@@ -1,6 +1,5 @@
 import { fetchProgrammingProgress, getCachedUserDetails } from "./moocfi"
 import { zip } from "../util/arrays"
-import { fetchQuizProgress } from "./quiznator"
 import { fetchQuizzesProgress } from "./quizzes"
 
 const introductionCourseGroups = [

@@ -155,3 +155,12 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+.dac-jetpack:before,
+.dac-rss:before{
+  content:"";
+  height:40px;
+  width:40px
+}
+.dac-jetpack:before{
+  background:url(../../data/img/kotlin/jetpack-icon.svg) 50%/40px no-repeat}

@@ -1,5 +1,5 @@
----
-path: '/siirretty/siirretty'
+﻿---
+path: '/part-0/siirretty'
 title: 'Siirretyt tehtävät'
 hidden: true
 ---

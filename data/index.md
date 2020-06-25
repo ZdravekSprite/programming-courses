@@ -6,6 +6,12 @@ information_page: true
 banner: true
 ---
 
+# Kotlin
+
+<p>Learn to architect and develop Android apps in the Kotlin programming language using industry-proven tools and libraries. Create apps in less time, writing less code, with fewer errors.</p>
+
+# Java
+
 Welcome to the University of Helsinki’s free massive open online course (MOOC) on programming! This is an updated version of our popular course Object-Oriented Programming with Java.
 
 During this course, you will learn the basics of computer programming, along with algorithms and object-oriented programming through the Java programming language. The course includes comprehensive materials and plenty of programming exercises - all of which are tested using our automatic testing service Test My Code.

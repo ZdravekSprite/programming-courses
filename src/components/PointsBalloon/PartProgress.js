@@ -5,19 +5,10 @@ import { BarChart, Bar, XAxis, YAxis, LabelList, Tooltip } from "recharts"
 import { improveGroupName } from "../../util/strings"
 import CustomTooltip from "./CustomTooltip"
 import { SMALL_MEDIUM_BREAKPOINT } from "../../util/constants"
-import { getCourseVariant } from "../../services/moocfi"
 import { withTranslation } from "react-i18next"
 
 const PartProgressContainer = styled.div`
   margin-bottom: 0.5rem;
-`
-
-const SmallP = styled.p`
-  font-size: 0.8rem;
-`
-
-const LargeP = styled.p`
-  font-size: 1rem;
 `
 
 const StyledBarChart = styled(BarChart)`
