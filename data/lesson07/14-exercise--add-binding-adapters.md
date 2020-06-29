@@ -3,7 +3,7 @@ path: "/lesson07/14-exercise--add-binding-adapters"
 title: "Exercise: Add Binding Adapters"
 ---
 
-<youtube id=ylxkPMxd_NE"></youtube>
+<youtube id="ylxkPMxd_NE"></youtube>
 
 <p>Now it’s your turn to complete this exercise yourself!</p>
 <p>In this exercise you'll create binding adapters and move data binding to logic to XML.</p>

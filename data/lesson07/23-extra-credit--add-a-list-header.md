@@ -5,115 +5,103 @@ title: "Extra Credit: Add a List Header"
 
 <youtube id="cd3OTFak_K8"></youtube>
 
-<p><strong>This is an EXTRA CREDIT exercise, so complete it if you're up for a challenge!</strong></p>
-<p>In this exercise you'll add a header to your RecyclerView.  It has lots of steps, but when you're done, your app will display a header as the first row of the list.</p>
-<p>Let's finish the adapter using <code>DataItems</code>. You can use this more advanced pattern when you have more than two types of views to hold in a <code>RecyclerView</code>.</p>
-<ol>
-<li><p><strong>At the bottom of <code>SleepNightAdapter</code>, add a sealed class called <code>DataItem</code>:</strong></p>
+**This is an EXTRA CREDIT exercise, so complete it if you're up for a challenge!**
+
+In this exercise you'll add a header to your RecyclerView.  It has lots of steps, but when you're done, your app will display a header as the first row of the list.
+
+Let's finish the adapter using `DataItems`. You can use this more advanced pattern when you have more than two types of views to hold in a `RecyclerView`.
+
+1. **At the bottom of `SleepNightAdapter`, add a sealed class called `DataItem`:**
 
 ```ts
- sealed class DataItem {
-     data class SleepNightItem(val sleepNight: SleepNight): DataItem() {
-         override val id = sleepNight.nightId
-     }
+sealed class DataItem {
+    data class SleepNightItem(val sleepNight: SleepNight): DataItem() {
+        override val id = sleepNight.nightId
+    }
 
-     object Header: DataItem() {
-         override val id = Long.MIN_VALUE
-     }
+    object Header: DataItem() {
+        override val id = Long.MIN_VALUE
+    }
 
-     abstract val id: Long
- }
+    abstract val id: Long
+}
 ```
 
-<p><br></p>
-</li>
-<li><p><strong>Add the TextHolder class inside the <code>SleepNightAdapter</code> class.</strong></p>
+2. **Add the TextHolder class inside the `SleepNightAdapter` class.**
 
 ```ts
- class TextViewHolder(view: View): RecyclerView.ViewHolder(view) {
-       companion object {
-           fun from(parent: ViewGroup): TextViewHolder {
-               val layoutInflater = LayoutInflater.from(parent.context)
-               val view = layoutInflater.inflate(R.layout.header, parent, false)
-                return TextViewHolder(view)
-           }
-       }
- }
+class TextViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    companion object {
+        fun from(parent: ViewGroup): TextViewHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            val view = layoutInflater.inflate(R.layout.header, parent, false)
+            return TextViewHolder(view)
+        }
+    }
+}
 ```
 
-<p><br></p>
-</li>
-<li><p><strong>Update the declaration of SleepNightAdapter to support any type of view holder.</strong></p>
+3. **Update the declaration of SleepNightAdapter to support any type of view holder.**
 
 ```ts
 class SleepNightAdapter:
- ListAdapter<SleepNight, RecyclerView.ViewHolder>(SleepNightDiffCallback())
+    ListAdapter<SleepNight, RecyclerView.ViewHolder>(SleepNightDiffCallback())
 ```
 
-<p><br></p>
-</li>
-<li><p><strong>Now let’s update <code>ListAdapter</code> to hold a list of <code>DataItem</code> instead of a list of <code>SleepNight</code>:</strong></p>
+4. **Now let’s update `ListAdapter` to hold a list of `DataItem` instead of a list of `SleepNight`:**
 
 ```ts
 class SleepNightAdapter:
- ListAdapter<DataItem, RecyclerView.ViewHolder>(SleepNightDiffCallback()) {}
+    ListAdapter<DataItem, RecyclerView.ViewHolder>(SleepNightDiffCallback()) {}
 ```
 
-<p><br></p>
-</li>
-<li><p><strong>Update your <code>DiffCallback</code> to handle <code>DataItem</code> instead of <code>SleepNight</code>:</strong></p>
+5. **Update your `DiffCallback` to handle `DataItem` instead of `SleepNight`:**
 
 ```ts
- class SleepNightDiffCallback : DiffUtil.ItemCallback<DataItem>() {
-     override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
-         return oldItem.id == newItem.id
-     }
+class SleepNightDiffCallback : DiffUtil.ItemCallback<DataItem>() {
+    override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
+        return oldItem.id == newItem.id
+    }
 
-     override fun areContentsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
-         return oldItem == newItem
-     }
- }
+    override fun areContentsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
+        return oldItem == newItem
+    }
+}
 ```
 
-<p><br></p>
-</li>
-<li><p><strong>Then, to figure out what view type to return, add a check to see which type of item is in the list:</strong></p>
-<p>At the top of the file, before the class declaration, create variables for Header and SleepNight item types:</p>
+6. **Then, to figure out what view type to return, add a check to see which type of item is in the list:**
+
+At the top of the file, before the class declaration, create variables for Header and SleepNight item types:
 
 ```ts
 private val ITEM_VIEW_TYPE_HEADER = 0
 private val ITEM_VIEW_TYPE_ITEM = 1
 ```
 
-<p>Then override <code>getItemViewType</code> and return the correct item view type.</p>
+Then override `getItemViewType` and return the correct item view type.
 
 ```ts
- override fun getItemViewType(position: Int): Int {
-      return when (getItem(position)) {
-          is DataItem.Header -> ITEM_VIEW_TYPE_HEADER
-          is DataItem.SleepNightItem -> ITEM_VIEW_TYPE_ITEM
-      }
- }
+override fun getItemViewType(position: Int): Int {
+    return when (getItem(position)) {
+        is DataItem.Header -> ITEM_VIEW_TYPE_HEADER
+        is DataItem.SleepNightItem -> ITEM_VIEW_TYPE_ITEM
+    }
+}
 ```
 
-<p><br></p>
-</li>
-<li><p><strong>Change onCreateViewHolder's return type to RecyclerView.ViewHolder, and
-update it to return the correct ITEM_VIEW_TYPE.</strong></p>
+7. **Change onCreateViewHolder's return type to RecyclerView.ViewHolder, and update it to return the correct ITEM_VIEW_TYPE.**
 
 ```ts
- override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
     return when (viewType) {
         ITEM_VIEW_TYPE_HEADER -> TextViewHolder.from(parent)
         ITEM_VIEW_TYPE_ITEM -> ViewHolder.from(parent)
         else -> throw ClassCastException("Unknown viewType ${viewType}")
     }
- }
+}
 ```
 
-<p><br></p>
-</li>
-<li><p><strong>In <code>onBindViewHolder()</code> you'll need to unwrap the <code>DataItem</code> to pass a <code>SleepNight</code> to the <code>ViewHolder</code></strong></p>
+8. **In `onBindViewHolder()` you'll need to unwrap the `DataItem` to pass a `SleepNight` to the `ViewHolder`.**
 
 ```ts
  override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -126,9 +114,7 @@ update it to return the correct ITEM_VIEW_TYPE.</strong></p>
  }
 ```
 
-<p><br></p>
-</li>
-<li><p><strong>You'll need a way to convert a <code>List&lt;SleepNight&gt;</code> to a <code>List&lt;DataItem&gt;</code>.</strong></p>
+9. **You'll need a way to convert a `List<SleepNight>` to a `List<DataItem>`.**
 
 ```ts
  private val adapterScope = CoroutineScope(Dispatchers.Default)
@@ -146,9 +132,7 @@ update it to return the correct ITEM_VIEW_TYPE.</strong></p>
  }
 ```
 
-<p><br></p>
-</li>
-<li><p><strong>Finally, update <code>SleepTrackerFragment</code> to pass a list of <code>DataItem</code> instead of a list of <code>SleepNight</code> and call the new addHeaderAndSubmitList method instead of submitList method:</strong></p>
+10. **Finally, update `SleepTrackerFragment` to pass a list of `DataItem` instead of a list of `SleepNight` and call the new addHeaderAndSubmitList method instead of submitList method:**
 
 ```ts
  sleepTrackerViewModel.nights.observe(viewLifecycleOwner, Observer {
@@ -158,28 +142,29 @@ update it to return the correct ITEM_VIEW_TYPE.</strong></p>
  })
 ```
 
-</li>
-</ol>
-<p>If you want to start at this step, you can download this exercise from: <a target="_blank" href="https://github.com/udacity/andfun-kotlin-sleep-tracker-with-recyclerview/archive/Step.13-Exercise-Add-a-List-Header.zip">Step.13-Exercise-Add-a-List-Header</a>.</p>
-<p>You will find plenty of <code>//TODO</code> comments to help you complete this exercise, and if you get stuck, go back and watch the video again.</p>
-<p>Once you’re done, you can check your solution against the solution we’ve provided here: <a target="_blank" href="https://github.com/udacity/andfun-kotlin-sleep-tracker-with-recyclerview/tree/Step.13-Solution-Add-a-List-Header">Step.13-Solution-Add-a-List-Header</a>, or using this <a target="_blank" href="https://github.com/udacity/andfun-kotlin-sleep-tracker-with-recyclerview/compare/Step.13-Exercise-Add-a-List-Header...Step.13-Solution-Add-a-List-Header">git diff</a>.</p>
+If you want to start at this step, you can download this exercise from: [Step.13-Exercise-Add-a-List-Header](https://github.com/udacity/andfun-kotlin-sleep-tracker-with-recyclerview/archive/Step.13-Exercise-Add-a-List-Header.zip).
+
+You will find plenty of `//TODO` comments to help you complete this exercise, and if you get stuck, go back and watch the video again.
+
+Once you’re done, you can check your solution against the solution we’ve provided here: [Step.13-Solution-Add-a-List-Header](https://github.com/udacity/andfun-kotlin-sleep-tracker-with-recyclerview/tree/Step.13-Solution-Add-a-List-Header), or using this [git diff](https://github.com/udacity/andfun-kotlin-sleep-tracker-with-recyclerview/compare/Step.13-Exercise-Add-a-List-Header...Step.13-Solution-Add-a-List-Header).
 
 <text-box variant='learningObjectives' name='Complete these tasks to display a header as the first row of the list.'>
 
-- In <code>SleepNightAdapter</code>, add a sealed class called <code>DataItem</code>, containing a <code>SleepNightItem</code> data class, and a <code>Header</code> object.
-- In <code>SleepNightAdapter</code>, copy and paste the <code>TextViewHolder</code> class from the exercise text.
-- In <code>SleepNightAdapter</code>, in <code>ListAdapter&lt;&gt;</code>, replace <code>SleepNight</code> with <code>DataItem</code> and <code>SleepNightAdapter.ViewHolder</code> with <code>RecyclerView.ViewHolder</code>.
-- In <code>SleepNightAdapter</code>, create variables for <code>Header</code> and <code>SleepNight</code> item types.
-- In <code>SleepNightAdapter</code>, change <code>onCreateViewHolder</code>'s return type to <code>RecyclerView.ViewHolder</code>, and update it to return <code>ITEM_VIEW_TYPE</code>.
-- In <code>SleepNightAdapter</code>, Change <code>onBindViewHolder()</code> to take a <code>RecyclerView.ViewHolder</code>, and change the item from a <code>SleepNight</code> to a <code>DataItem</code>.
-- In <code>SleepNightAdapter</code>, override <code>getItemViewType()</code> and check whether the item is a <code>Header</code> or a <code>SleepNight</code>.
-- In <code>SleepNightAdapter</code>, update <code>DiffCallback</code> to compare <code>DataItem</code> instead <code>SleepNight</code> objects.
-- In <code>SleepNightAdapter</code>, define a <code>CoroutineScope</code> with <code>Dispatchers.Default</code>.
-- In <code>SleepNightAdapter</code>, create a new <code>addHeaderAndSubmitList()</code> function, and launch the coroutine to convert a <code>List&lt;SleepNight&gt;</code> to a <code>List&lt;DataItem&gt;</code>, then submit the list to the adapter on the main thread.
-- In <code>SleepTrackerFragment</code>, replace <code>submitList</code> with <code>addHeaderAndSubmitList</code>.
+- In `SleepNightAdapter`, add a sealed class called `DataItem`, containing a `SleepNightItem` data class, and a `Header` object.
+- In `SleepNightAdapter`, copy and paste the `TextViewHolder` class from the exercise text.
+- In `SleepNightAdapter`, in `ListAdapter&lt;&gt;`, replace `SleepNight` with `DataItem` and `SleepNightAdapter.ViewHolder` with `RecyclerView.ViewHolder`.
+- In `SleepNightAdapter`, create variables for `Header` and `SleepNight` item types.
+- In `SleepNightAdapter`, change `onCreateViewHolder`'s return type to `RecyclerView.ViewHolder`, and update it to return `ITEM_VIEW_TYPE`.
+- In `SleepNightAdapter`, Change `onBindViewHolder()` to take a `RecyclerView.ViewHolder`, and change the item from a `SleepNight` to a `DataItem`.
+- In `SleepNightAdapter`, override `getItemViewType()` and check whether the item is a `Header` or a `SleepNight`.
+- In `SleepNightAdapter`, update `DiffCallback` to compare `DataItem` instead `SleepNight` objects.
+- In `SleepNightAdapter`, define a `CoroutineScope` with `Dispatchers.Default`.
+- In `SleepNightAdapter`, create a new `addHeaderAndSubmitList()` function, and launch the coroutine to convert a `List&lt;SleepNight&gt;` to a `List&lt;DataItem&gt;`, then submit the list to the adapter on the main thread.
+- In `SleepTrackerFragment`, replace `submitList` with `addHeaderAndSubmitList`.
 - Run the app and verify the list has a header!
 
 </text-box>
 
-<p>Wow, that was a lot of steps, great job!</p>
+Wow, that was a lot of steps, great job!
+
 <button>Continue</button>
